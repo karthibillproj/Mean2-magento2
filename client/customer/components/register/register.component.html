@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row col-md-4">
+        <h1>Customer Register</h1>
+        <div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+        <form novalidate (ngSubmit)="doRegister()" [formGroup]="customer">
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" name="firstname" placeholder="enter firstname..." formControlName="firstname" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('firstname').hasError('required') && customer.get('firstname').touched">First name is required</small>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" name="lastname" placeholder="enter lastname..." formControlName="lastname" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('lastname').hasError('required') && customer.get('lastname').touched">Last name is required</small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email/Username:</label>
+                <input type="text" name="email" placeholder="enter email..." formControlName="email" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('email').hasError('required') && customer.get('email').touched">Email is required</small>
+                <small class="error help-block" *ngIf="customer.get('email').hasError('incorrectMailFormat') && customer.get('email').touched">Email format should be <i>john@doe.com</i></small>
+            </div>
+            <div class="form-group" formGroupName="passwords">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="enter password..." formControlName="password" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('passwords').get('password').hasError('required') && customer.get('passwords').get('password').touched">password is required</small>
+
+
+                <label for="confirmpassword">Confirm Password:</label>
+                <input type="password" name="confirmpassword" placeholder="confirm password..." formControlName="confirmpassword" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('passwords').get('confirmpassword').hasError('required') && customer.get('passwords').get('confirmpassword').touched">password is required</small>
+                <small class="error help-block" *ngIf="customer.get('passwords').get('confirmpassword').hasError('incorrectPassword') && customer.get('passwords').get('confirmpassword').touched">Confirm password does not matches</small>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!customer.valid">Register</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+{
+  "name": "mean-magento",
+  "author": "SCG",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "server": "node server.js",
+    "start": "concurrently \"npm run tsc:w\" \"nodemon server.js\""
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "2.2.0",
+    "@angular/compiler": "2.2.0",
+    "@angular/core": "2.2.0",
+    "@angular/forms": "2.2.0",
+    "@angular/http": "2.2.0",
+    "@angular/material": "^2.0.0-beta.1",
+    "@angular/platform-browser": "2.2.0",
+    "@angular/platform-browser-dynamic": "2.2.0",
+    "@angular/router": "3.2.0",
+    "@angular/upgrade": "2.2.0",
+    "@types/lodash": "^4.14.47",
+    "angular2-cookie": "^1.2.6",
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "core-js": "^2.4.1",
+    "csurf": "^1.9.0",
+    "errorhandler": "^1.5.0",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "humps": "^1.1.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.6.8",
+    "ng2-bootstrap": "1.1.14-1",
+    "ng2-bs3-modal": "^0.10.4",
+    "ng2-dropdown": "0.0.21",
+    "ng2-nouislider": "^1.4.4",
+    "ng2-slider-component": "^1.0.9",
+    "nouislider": "^9.1.0",
+    "oauth-1.0a": "^1.0.1",
+    "pug": "^2.0.0-beta6",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.40",
+    "winston": "^2.3.0",
+    "zone.js": "^0.6.26"
+  },
+  "devDependencies": {
+    "concurrently": "^3.1.0",
+    "lite-server": "^2.2.2",
+    "typescript": "2.0.8",
+    "@types/core-js": "^0.9.34",
+    "@types/node": "^6.0.48"
+  }
+}

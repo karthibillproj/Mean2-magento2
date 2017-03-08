@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row col-md-4" [class.loader]="isLoaderActive">
+        <h1>Customer Login</h1>
+
+        <alert type="danger" *ngIf="anyError">{{anyError}}</alert>
+
+        <div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+        <form novalidate (ngSubmit)="doLogin()" [formGroup]="customer">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="username" placeholder="enter email..." formControlName="username" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('username').hasError('required') && customer.get('username').touched">Email is required</small>
+                <small class="error help-block" *ngIf="customer.get('username').hasError('incorrectMailFormat') && customer.get('username').touched">Username format should be <i>john@doe.com</i></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="enter password..." formControlName="password" class="form-control">
+                <small class="error help-block" *ngIf="customer.get('password').hasError('required') && customer.get('password').touched">password is required</small>
+            </div>
+            <button type="submit" class="btn btn-success" [disabled]="!customer.valid">Login</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="loading" *ngIf="isLoaderActive"></div>
+<div class="row">
+   <div class="col-md-6">
+        <img class="img-responsive center-block" [src]="product.image" width="400" height="450"> 
+        <div *ngIf="product.galleryimage && product.galleryimage.length > 0">
+            <div class="col-md-2" *ngFor="let gallery of product.galleryimage;" (click)="setProductimage(gallery.large)">
+            <a href="javascript:void(0);"><img [src]="gallery.thumbnail"></a>
+            </div>
+        </div>
+   </div>
+
+   <div class="col-md-6">
+    <div class="row">
+        <div class="col-md-12">
+                <h1>{{product.name}}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+           <!-- <span class="label label-primary">Vintage</span> -->
+            <span class="monospaced">Sku: {{product.sku}}</span>
+        </div>
+        <div class="vertspace"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+           <!-- <span class="label label-primary">Vintage</span> -->
+            <span class="monospaced">Stock: {{product.stockstatus}}</span>
+        </div>
+        <div class="vertspace"></div>
+    </div>
+   
+    <div class="row">
+        <div class="col-md-12 overall">
+            <div *ngIf="product.overallrating">
+            <!-- <span aria-hidden="true" class="glyphicon" *ngFor="let obj of createRange(5)" [class.glyphicon-star]="obj<=product.overallrating" [class.glyphicon-star-empty]="obj>product.overallrating"></span> -->
+             <overallrate [starrate]="product.overallrating"></overallrate>
+            </div>
+           <!-- <span id="overallrspan">{{product.overallrating}}</span>
+            <input id="ovarallrate" name="overallrate"  data-show-clear="false" data-show-caption="false"  data-size="xs"  readonly="true"  class="rating-loading"> -->
+            <span *ngIf="product.reviewscount" class="label label-success">{{product.reviewscount}} reviews</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 bottom-rule">
+            <h2 class="product-price">${{product.price}}</h2>
+        </div>
+    </div>
+    <div class="row add-to-cart" *ngIf="product.stockstatus == 'instock'">
+        <div class="col-md-5 product-qty">
+          <!--  <span class="btn btn-default btn-lg btn-qty">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </span> -->
+
+           <input [(ngModel)]="inv.quantity" class="btn btn-default btn-lg btn-qty"  /> 
+
+          <!--  <span class="btn btn-default btn-lg btn-qty">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+            </span> -->
+        </div>
+
+        <div class="col-md-4">
+            <button (click)="addToCart(product.productid,product.sku,product.price,inv.quantity)" class="btn btn-lg btn-info btn-full-width">
+            Add to Cart
+            </button>
+        </div>
+       
+    </div>
+    <div class="row">
+        <div class="col-md-12 bottom-rule top-10"></div>
+    </div><!-- end row -->
+
+   </div>
+  </div>
+  <modal #modal [keyboard]="true" [backdrop]="'static'">
+    <modal-body>
+        <div class="alert alert-success">
+            <strong>Success!</strong> Product added to cart.
+        </div>
+        <a class="btn btn-info" data-dismiss="modal">Continue shopping</a>
+        <a class="btn btn-info" routerLink="/cart">View cart</a>
+    </modal-body>
+</modal>

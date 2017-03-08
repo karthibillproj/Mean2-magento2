@@ -1,0 +1,181 @@
+<!-- <h2>{{product.name}}</h2>
+ <img [src]="productimage" width="400" height="450"> 
+ <h3>Price</h3>
+<p>{{product.price}}$</p>
+<h3>Sku</h3>
+<p>{{product.sku}}</p>
+<h3>Description</h3>
+<p [innerHTML]="product.description"> </p> --?
+
+ <!-- <h2>{{name}}</h2>
+<img [src]="productimage">
+<p>Prie: {{price}}$</p>
+<p>sku: {{sku}}</p>
+<p>Description : {{description}}</p> -->
+
+<!--<style type="text/css">
+
+</style>
+
+<div class="loadericon" *ngIf="isLoaderActive"></div>
+<div *ngIf="!isLoaderActive">
+  <quickview [product]="product"></quickview>
+  <div *ngIf="product.upsell && product.upsell.length > 0">
+    <div class="col-md-6">
+      <h4>The products you may like</h4>
+    </div>
+    <div class="col-md-12 topspace">
+      <div class="col-md-2" *ngFor="let upsellproduct of product.upsell">
+        <img class="img-responsive center-block" [src]="upsellproduct.image" />
+        <div class="row text-center lowtop">
+          <strong>{{upsellproduct.name}}</strong>
+        </div>
+        <div class="row text-center lowtop">
+          <strong>${{upsellproduct.price}}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+
+<!--product details with new design-->
+<div class="loading" *ngIf="isLoaderActive"></div>
+<div class="container" *ngIf="!isLoaderActive">
+  <quickview [product]="product"></quickview>
+
+  <div class="col-md-12 topspace box product-details-tabs">
+    <tabset>
+      <tab heading="Description">
+        <div class="innerspace" [innerHTML]="product.description">
+        </div>
+      </tab>
+      <tab *ngIf="product.moreinformation && product.moreinformation.length > 0" heading="More information">
+        <div class="innerspace">
+          <table class='table table-borderless'>
+            <tbody>
+              <tr *ngFor="let information of product.moreinformation">
+                <th class="col col-md-1" scope="row">{{information.label}}</th>
+                <td class="col data" data-th="Style">{{information.value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </tab>
+
+
+      <tab *ngIf="product.reviews" heading="Reviews">
+        <div class="innerspace">
+          <div *ngIf="product.reviews && product.reviews.length > 0">
+            <div class="col-md-12" *ngFor="let review of product.reviews">
+              <h3>{{review.summary}}</h3>
+              <!-- <span aria-hidden="true" class="glyphicon" *ngFor="let obj of createRange(5)" [class.glyphicon-star]="obj<=review.rating" [class.glyphicon-star-empty]="obj>review.rating"></span> -->
+              <overallrate [starrate]="review.rating"></overallrate>
+              {{review.nickname}}
+              <!-- <span class="pull-right">12/21/2016</span> -->
+              <p>{{review.reviewdescription}}</p>
+              <hr>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <form [formGroup]="ratingForm" novalidate (ngSubmit)="ratingsave(ratingForm.value, ratingForm.valid)" id="ratingform" class="form-horizontal"
+              method="post">
+              <div class="form-group">
+
+                <label class="col-md-3 control-label" for="name">Your rating</label>
+                <div class="col-md-9">
+                  <!-- <input id="starrating"  name="starrating" type="text" (click)="starclick()" type="number" class="rating" min=1 max=5 data-size="sm" > -->
+                  <span tabindex="0">
+                    <span *ngFor="let rr of range; let index = index">
+                        <span class="sr-only">({{ index < rate ? '*' : ' ' }})</span>
+                  <i class="fa" (click)="updatestar(index + 1)" [ngClass]="index < rate ? 'fa-star' : 'fa-star-o'"></i>
+                  </span>
+                  </span>
+                  <input type="hidden" formControlName="ratingvalue" id="ratingvalue" name="ratingvalue" />
+                  <input type="hidden" formControlName="productId" id="productId" name="productId" />
+                  <input type="hidden" formControlName="customerId" id="customerId" name="customerId" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="name">Nickname</label>
+                <div class="col-md-9">
+                  <input id="nickName" formControlName="nickName" name="nickName" type="text" placeholder="Nickname" class="form-control">
+                  <small class="error" [hidden]="ratingForm.controls.nickName.valid || (ratingForm.controls.nickName.pristine && !submitted)">
+                     Nickname is required (minimum 3 characters).
+                </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="email">Summary</label>
+                <div class="col-md-9">
+                  <input id="title" formControlName="title" name="title" type="text" placeholder="Summary" class="form-control">
+                  <small class="error" [hidden]="ratingForm.controls.title.valid || (ratingForm.controls.title.pristine && !submitted)">
+                     Summary is required.
+                </small>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label class="col-md-3 control-label" for="message">Review</label>
+                <div class="col-md-9">
+                  <textarea class="form-control" formControlName="detail" id="detail" name="detail" placeholder="Review" rows="5"></textarea>
+                  <small class="error" [hidden]="ratingForm.controls.detail.valid || (ratingForm.controls.detail.pristine && !submitted)">
+                     Review is required.
+                </small>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <div class="col-md-12 text-right">
+                  <button type="submit" [disabled]="!ratingForm.valid" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+
+  <div class="row same-height-row" ng-if="product.upsell">>
+    <div class="col-md-3 col-sm-6">
+      <div class="box same-height">
+        <h3>You may also like these products</h3>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6" *ngFor="let upsellProduct of product.upsell">
+      <div class="product same-height" >
+        <div class="flip-container">
+          <div class="flipper">
+            <div class="front">
+              <a [routerLink]="'/product/'+upsellProduct.sku">
+                <img [src]="upsellProduct.image" alt="" class="img-responsive">
+              </a>
+            </div>
+            <div class="back">
+              <a [routerLink]="'/product/'+upsellProduct.sku">
+                <img [src]="upsellProduct.image" alt="" class="img-responsive">
+              </a>
+            </div>
+          </div>
+        </div>
+        <a [routerLink]="'/product/'+upsellProduct.sku" class="invisible">
+          <img [src]="upsellProduct.image" alt="" class="img-responsive">
+        </a>
+        <div class="text">
+          <h3><a [routerLink]="'/product/'+upsellProduct.sku">{{upsellProduct.name}}</a></h3>
+          <p class="price">
+            <del *ngIf="upsellProduct.specialPrice">{{upsellProduct.price | currency:'USD':true}}</del> {{upsellProduct.finalPrice | currency:'USD':true}}
+          </p>
+        </div>
+      </div>
+      <!-- /.product -->
+    </div>
+  </div>
+</div>

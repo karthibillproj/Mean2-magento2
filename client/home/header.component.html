@@ -1,0 +1,239 @@
+<!--create nested navigation menu-->
+
+<!--<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li  *ngFor="let nav of navMenu" class="rootlist" [class.dropdown]="nav.subnav">
+                    <a routerLink="/category/page/{{nav.id}}" class="dropdown-toggle rootmenu">{{nav.title}}<span *ngIf="nav.subnav" class="caret"></span></a>
+                    <ul class="dropdown-menu firstlist" role="menu" child-nav *ngIf="nav.subnav" [subnav]="nav.subnav"></ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown rootlist">
+                    <a href="#" class="dropdown-toggle rootmenu">Account <span class="caret"></span></a>
+                    <ul class="dropdown-menu firstlist" role="menu">
+                        <li *ngIf="!isLogggedIn()"><a [routerLink]="['login']">Login</a></li>
+                        <li *ngIf="!isLogggedIn()"><a routerLink="/register">Sign Up</a></li>
+                        <li *ngIf="isLogggedIn()"><a routerLink="/account">My Account</a></li>
+                        <li *ngIf="isLogggedIn()"><a href="javascript:void(0);" (click)="doLogout()">Logout</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown minicart">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                    </a>
+                   
+                    <ul *ngIf="minicartContent.itemsQty > 0"  (click)="noClose($event)" class="dropdown-menu" role="menu" >
+                        <li class="minicart-details">
+                            <div class="items">
+                                <span>{{minicartContent.itemsQty}}</span> items
+                            </div>
+                            <div class="subtotal">
+                                <span>Cart Subtotal: </span>
+                                ${{minicartContent.subtotal}}
+                            </div>
+                        </li>
+                        <li *ngFor="let product of minicartContent.items;let i=index" class="minicart-products" > 
+                            <a href="" class="minicart-product-img" >
+                                <span *ngFor="let productimage of productImages">
+                                    <img *ngIf="productimage.itemId==product.itemId" class="product-image-photo" [src]="productimage.image" alt="{{product.name}}" >
+                                </span>
+                            </a>
+                            <div class="minicart-product-item-details">
+                                <a href=""><h5>{{product.name}}</h5></a>
+                                <p class="minicart-product-price"><span>$</span>{{product.price}}</p>
+                                <div class="details">
+                                    <div class="left">
+                                       <span>Qty: </span> <input #updateminicartinput (click)="displayEditButton($event,product.qty)"  class="form-control" value="{{product.qty}}" id="product-minicart-qty-{{i}}" type="number">
+                                       <button (click)="updateMiniCart(updateminicartinput.value,product.itemId)" style="display:none" class="btn btn-info btn-sm product-minicart-update-{{i}}"><i class="glyphicon glyphicon-refresh"></i>Update</button>
+                                    </div>
+                                    <div class="right">
+                                        <a href="javascript:void(0)" (click)="removeMiniCartItem(product.itemId)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="bottom-checkout">
+                            <button routerLink="/cart" type="button" class="btn btn-primary minicart-cart">Cart</button>
+                            <button routerLink="/checkout" type="button" class="btn btn-primary">Checkout</button>
+                        </li>
+                    </ul>
+                    <ul *ngIf="minicartContent.itemsQty < 1" (click)="noClose($event)" class="dropdown-menu no-item" role="menu" >
+                        <li class="minicart-details">
+                            No items in cart
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            
+        </div>
+    </div>
+</nav>-->
+
+<!-- *** TOPBAR ***
+ _________________________________________________________ -->
+<div id="top">
+    <div class="container">
+        <div class="col-md-6 offer" data-animate="fadeInDown">
+            <a href="#" class="btn btn-success btn-sm" data-animate-hover="shake">Offer of the day</a> <a href="#">Get flat 35% off on orders over $50!</a>
+        </div>
+        <div class="col-md-6" data-animate="fadeInDown">
+            <ul class="menu">
+                <li><a *ngIf="!isLogggedIn()" routerLink="/login">Login  |</a>
+                </li>
+                <!--<li><a *ngIf="!isLogggedIn()" href="#" data-toggle="modal" data-target="#login-modal">Login  |</a>
+                </li>-->
+                <li><a *ngIf="!isLogggedIn()" routerLink="/register">Register  |</a>
+                </li>
+                <li *ngIf="isLogggedIn()"><a routerLink="/account">My Account  |</a>
+                </li>
+                <li *ngIf="isLogggedIn()"><a href="javascript:void(0);" (click)="doLogout()">Logout  |</a>
+                </li>
+                <li><a routerLink="/contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="Login">Customer login</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="customer-orders.html" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email-modal" placeholder="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password-modal" placeholder="password">
+                        </div>
+
+                        <p class="text-center">
+                            <button class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+                        </p>
+
+                    </form>
+
+                    <p class="text-center text-muted">Not registered yet?</p>
+                    <p class="text-center text-muted"><a routerLink="register"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and
+                        gives you access to special discounts and much more!</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- *** TOP BAR END *** -->
+
+<!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+    <div class="container">
+        <div class="navbar-header">
+
+            <a class="logo navbar-brand home" routerLink="/" data-animate-hover="bounce">
+                <img [src]="logo" alt="Obaju logo" class="">
+                <!--<img src="public/images/logo-small.png" alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>-->
+            </a>
+            <div class="navbar-buttons">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+                <a class="btn btn-default navbar-toggle" routerLink="cart">
+                    <i class="fa fa-shopping-cart"></i> <span class="hidden-xs">
+                        <span *ngIf="minicartContent.itemsQty == 0 || (minicartContent | json) === '{}'" class="cart-qty">0</span>
+                    <span *ngIf="minicartContent.itemsQty > 0" class="cart-qty">{{minicartContent.itemsQty}}</span> items
+                    in cart</span>
+                </a>
+            </div>
+        </div>
+        <!--/.navbar-header -->
+
+        <div class="navbar-collapse collapse" id="navigation">
+
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active"><a routerLink="/">Home</a>
+                </li>
+                <li class="dropdown yamm-fw" *ngFor="let nav1 of navMenu">
+                    <a *ngIf="nav1.subnav" href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{nav1.title}}<b class="caret"></b></a>
+                    <a *ngIf="nav1.subnav == undefined" routerLink="/category/page/{{nav1.id}}" class="dropdown-toggle" data-toggle="dropdown"
+                        data-hover="dropdown" data-delay="200">{{nav1.title}}</a>
+                    <ul class="dropdown-menu" *ngIf="nav1.subnav">
+                        <li>
+                            <div class="yamm-content">
+                                <div class="row">
+                                    <div class="col-sm-3" *ngFor="let nav2 of nav1.subnav">
+                                        <h5><a routerLink="/category/page/{{nav2.id}}">{{nav2.title}}</a></h5>
+                                        <ul *ngIf="nav2.subnav">
+                                            <li *ngFor="let nav3 of nav2.subnav">
+                                                <a routerLink="/category/page/{{nav3.id}}">{{nav3.title}}</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.yamm-content -->
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+        <!--/.nav-collapse -->
+
+        <div class="navbar-buttons">
+
+            <div class="navbar-collapse collapse right" id="basket-overview">
+                <a routerLink="cart" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">
+                    <span *ngIf="minicartContent.itemsQty == 0 || (minicartContent | json) === '{}'" class="cart-qty">0</span>                        
+                        <span *ngIf="minicartContent.itemsQty > 0" class="cart-qty">{{minicartContent.itemsQty}}</span>
+                     items in cart</span></a>
+            </div>
+            <!--/.nav-collapse -->
+
+            <div class="navbar-collapse collapse right" id="search-not-mobile">
+                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                        <span class="sr-only">Toggle search</span>
+                        <i class="fa fa-search"></i>
+                    </button>
+            </div>
+
+        </div>
+
+        <div class="collapse clearfix" id="search">
+
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+
+			<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+		    </span>
+                </div>
+            </form>
+
+        </div>
+        <!--/.nav-collapse -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#navbar -->
+
+<!-- *** NAVBAR END *** -->

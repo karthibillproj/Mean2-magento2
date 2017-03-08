@@ -1,0 +1,52 @@
+<div *ngFor="let cat of catDetails" >
+    <div class="container" style="padding-left: 0">
+        <div class="jumbotron" style="background-color: #ffdd16; padding-top: 10px; padding-left: 10px;">
+            <h1>Category {{cat.name}}</h1>
+            <div class="cat-img">
+                <img src="{{ cat.image }}"/>
+            </div>
+        </div>      
+    </div>
+
+    <div id="products" class="row list-group">
+        <div *ngFor="let subcat of cat.children">
+            
+            <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                    <img class="group list-group-image" src="{{subcat.image}}" alt="" />
+                </div>
+                <div class="caption">
+                    <a [routerLink]="'/productlist/id/'+subcat.entityId"><h4 class="group inner list-group-item-heading">{{subcat.name}}</h4></a>
+                </div>
+            </div>
+        <!-- <div class="item  col-xs-4 col-lg-4">
+            <div class="thumbnail">
+                <img class="group list-group-image" src="{{subcat.image}}" alt="" />
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">{{subcat.name}}</h4>
+                </div>
+            </div>
+        </div>-->
+        </div>
+    </div> 
+        
+</div>
+
+
+
+
+<!-- <div class="row">
+    <div class="main-category">   
+        <ul>
+            <li *ngFor="let subcat of catDetails" style="float:left">
+                <div class=subcat-name>
+                    {{ subcat.name }}
+                </div>
+                <div class=subcat-img>
+                    <img src="{{ subcat.image }}" style="width:500px"/>
+                </div>
+                <a [routerLink]="['/productlist', {subcatid:subcat.entityId}]">{{subcat.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div> -->

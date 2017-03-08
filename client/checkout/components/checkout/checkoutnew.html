@@ -1,0 +1,481 @@
+<style>
+    .click-step{cursor: pointer;}
+    .text-xs-center {text-align: center;}
+
+</style>
+<div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+<div id="content">
+    <div *ngIf="!isOrderSuccess"  class="container">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a>
+                </li>
+                <li>Checkout - Address</li>
+            </ul>
+        </div>
+
+        <div class="col-md-9" id="checkout">
+
+            <div class="box">
+
+                <!--checkout address-->
+                <form *ngIf="showAddress" [formGroup]="billingForm" novalidate (ngSubmit)="billingsave(billingForm.value, billingForm.valid)" id="billingform" method="post">
+                    <h1>Checkout Address</h1>
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="active"><a (click)="addressShow()"><i class="fa fa-map-marker"></i><br>Address</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-truck"></i><br>Delivery Method</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-money"></i><br>Payment Method</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-eye"></i><br>Order Review</a>
+                        </li>
+                    </ul>
+
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="firstname">Firstname</label>
+                                    <input class="form-control" formControlName="firstname" type="text" id="firstname">
+                                    <small class="error" [hidden]="billingForm.controls.firstname.valid || (billingForm.controls.firstname.pristine && !submitted)">
+                                        Firstname is required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="lastname">Lastname</label>
+                                    <input type="text" formControlName="lastname" name="lastname" class="form-control" id="lastname">
+                                    <small class="error" [hidden]="billingForm.controls.lastname.valid || (billingForm.controls.lastname.pristine && !submitted)">
+                                        Lastname is required.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" formControlName="company" name="company" class="form-control" id="company">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="street">Street</label>
+                                    <input type="text" formControlName="street" name="street" class="form-control" id="street">
+                                    <small class="error" [hidden]="billingForm.controls.street.valid || (billingForm.controls.street.pristine && !submitted)">
+                                        Street address required.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" formControlName="city" name="city" class="form-control" id="city">
+                                    <small class="error" [hidden]="billingForm.controls.city.valid || (billingForm.controls.city.pristine && !submitted)">
+                                        City required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="zip">ZIP</label>
+                                    <input type="text" formControlName="postcode" name="postcode" class="form-control" id="postcode">
+                                    <small class="error" [hidden]="billingForm.controls.postcode.valid || (billingForm.controls.postcode.pristine && !submitted)">
+                                        Zipcode required.
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="country">Country</label>
+                                    <select class="form-control" formControlName="country_id" name="country_id" id="country_id">
+                                    <option value="">Please select a country</option>
+                                    <!--<option data-title="Afghanistan" value="AF">Afghanistan</option>
+                                    <option data-title="Albania" value="AL">Albania</option>
+                                    <option data-title="Algeria" value="DZ">Algeria</option>
+                                    <option data-title="American Samoa" value="AS">American Samoa</option>-->
+                                    <option data-title="United States" value="US">United States</option>
+                                    </select>
+                                    <small class="error" [hidden]="billingForm.controls.country_id.valid || (billingForm.controls.country_id.pristine && !submitted)">
+                                        Country required.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <div class="form-group">
+                                    <label for="state">State</label>
+                                    <select class="form-control" formControlName="region" name="region" id="region">
+                                        <option value="">Please select a region, state or province.</option>
+                                        <option data-title="Alabama" value="1">Alabama</option>
+                                        <option data-title="Alaska" value="2">Alaska</option>
+                                        <option data-title="American Samoa" value="3">American Samoa</option>
+                                        <option data-title="Arizona" value="4">Arizona</option>
+                                        <option data-title="New Hampshire" value="40">New Hampshire</option>
+                                        <option data-title="New Jersey" value="41">New Jersey</option>
+                                        <option data-title="New Mexico" value="42">New Mexico</option>
+                                        <option data-title="New York" value="43">New York</option>
+                                    </select>
+                                    <small class="error" [hidden]="billingForm.controls.region.valid || (billingForm.controls.region.pristine && !submitted)">
+                                        State required.
+                                    </small>
+                                    <!--<select class="form-control" id="state"></select>-->
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="phone">Telephone</label>
+                                    <input type="text" formControlName="telephone" name="telephone" class="form-control" id="phone">
+                                    <small class="error" [hidden]="billingForm.controls.telephone.valid || (billingForm.controls.telephone.pristine && !submitted)">
+                                        Phonenumber required and valid.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" formControlName="email" name="email" class="form-control" id="email">
+                                    <small class="error" [hidden]="billingForm.controls.email.valid || (billingForm.controls.email.pristine && !submitted)">
+                                        Email is required and valid.
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.row -->
+                    </div>
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a routerLink="/cart" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to basket</a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" [disabled]="!billingForm.valid" id="activate-step-2" class="btn btn-primary">Continue to Delivery Method<i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <!--checkout shipping method-->
+                <form *ngIf="showShippingMethod" [formGroup]="shippingmethodForm" novalidate (ngSubmit)="shippingmethodsave(shippingmethodForm.value, shippingmethodForm.valid)" id="shippingmethodForm" method="post">
+                    <h1>Checkout - Delivery method</h1>
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="click-step"><a (click)="addressShow()"><i class="fa fa-map-marker"></i><br>Address</a>
+                        </li>
+                        <li class="active"><a (click)="shippingMethodShow()"><i class="fa fa-truck"></i><br>Delivery Method</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-money"></i><br>Payment Method</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-eye"></i><br>Order Review</a>
+                        </li>
+                    </ul>
+
+                    <div class="content">
+                        <div class="row">
+                            <div *ngFor="let shippingMethod of addressResponse" class="col-sm-6">
+                                <div class="box shipping-method">
+
+                                    <h4>{{shippingMethod.carrierTitle}}</h4>
+                                    <span>{{shippingMethod.amount | currency:"USD":true}}</span>
+                                    <div class="box-footer text-center">
+                                        <input type="radio" formControlName="shippingmethod" name="shippingmethod" value="{{shippingMethod.carrierCode}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-sm-6">
+                                <div class="box shipping-method">
+
+                                    <h4>USPS Next Day</h4>
+
+                                    <p>Get it right on next day - fastest option possible.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="delivery" value="delivery1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box shipping-method">
+
+                                    <h4>USPS Next Day</h4>
+
+                                    <p>Get it right on next day - fastest option possible.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="delivery" value="delivery2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="box shipping-method">
+
+                                    <h4>USPS Next Day</h4>
+
+                                    <p>Get it right on next day - fastest option possible.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="delivery" value="delivery3">
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                    <!-- /.content -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a (click)="addressShow()" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Addresses</a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">Continue to Payment Method<i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!--checkout payment method-->
+                <form *ngIf="showPaymentMethod" [formGroup]="paymentmethodForm" novalidate (ngSubmit)="paymentmethodsave(paymentmethodForm.value, paymentmethodForm.valid)" id="paymentmethodForm" method="post" >
+                    <h1>Checkout - Payment method</h1>
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="click-step"><a (click)="addressShow()"><i class="fa fa-map-marker"></i><br>Address</a>
+                        </li>
+                        <li class="click-step"><a (click)="shippingMethodShow()"><i class="fa fa-truck"></i><br>Delivery Method</a>
+                        </li>
+                        <li class="active"><a (click)="paymentMethodShow()"><i class="fa fa-money"></i><br>Payment Method</a>
+                        </li>
+                        <li class="disabled"><a href="javascript:void(0)"><i class="fa fa-eye"></i><br>Order Review</a>
+                        </li>
+                    </ul>
+
+                    <div class="content">
+                        <div class="row">
+                            <div *ngFor="let paymentMethod of paymentResponse"  class="col-sm-6">
+                                <div class="box payment-method">
+                                    <h4>{{paymentMethod.title}}</h4>
+                                    <div class="box-footer text-center">
+                                        <input formControlName="paymentmethod" type="radio" name="paymentmethod" value="{{paymentMethod.code}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-sm-6">
+                                <div class="box payment-method">
+
+                                    <h4>Paypal</h4>
+
+                                    <p>We like it all.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="payment" value="payment1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box payment-method">
+
+                                    <h4>Payment gateway</h4>
+
+                                    <p>VISA and Mastercard only.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="payment" value="payment2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box payment-method">
+
+                                    <h4>Cash on delivery</h4>
+
+                                    <p>You pay when you get it.</p>
+
+                                    <div class="box-footer text-center">
+
+                                        <input type="radio" name="payment" value="payment3">
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <!-- /.row -->
+
+                    </div>
+                    <!-- /.content -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a (click)="shippingMethodShow()" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Shipping method</a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">Continue to Order review<i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!--checkout order review-->
+                <form *ngIf="showOrderReview" [formGroup]="orderReviewForm" novalidate (ngSubmit)="postOrder(orderReviewForm.value, orderReviewForm.valid)" id="orderReviewForm" method="post">
+                    <h1>Checkout - Order review</h1>
+                    <ul class="nav nav-pills nav-justified">
+                        <li class="click-step"><a (click)="addressShow()"><i class="fa fa-map-marker"></i><br>Address</a>
+                        </li>
+                        <li class="click-step"><a (click)="shippingMethodShow()"><i class="fa fa-truck"></i><br>Delivery Method</a>
+                        </li>
+                        <li class="click-step"><a (click)="paymentMethodShow()"><i class="fa fa-money"></i><br>Payment Method</a>
+                        </li>
+                        <li class="active"><a (click)="orderReviewShow()"><i class="fa fa-eye"></i><br>Order Review</a>
+                        </li>
+                    </ul>
+
+                    <div class="content">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Product</th>
+                                        <th>Quantity</th>
+                                        <th>Unit price</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of cartContent.items">
+                                        <td>
+                                            <div *ngFor="let img of cartItemImages" >
+                                            <a *ngIf="img.itemId == item.itemId"  href="javascript:void(0)">
+                                                <img src="{{img.image}}" alt="{{item.name}}">
+                                            </a>
+                                            </div>
+                                        </td>
+                                        <td><a href="javascript:void(0)">{{item.name}}</a>
+                                        <td>{{item.qty}}</td>
+                                        <td>{{item.price | currency:"USD":true}}</td>
+                                        <td>{{item.discountAmount | currency:"USD":true}}</td>
+                                        <td>{{item.rowTotal | currency:"USD":true}}</td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td>
+                                            <a href="#">
+                                                <img src="img/detailsquare.jpg" alt="White Blouse Armani">
+                                            </a>
+                                        </td>
+                                        <td><a href="#">White Blouse Armani</a>
+                                        </td>
+                                        <td>2</td>
+                                        <td>$123.00</td>
+                                        <td>$0.00</td>
+                                        <td>$246.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#">
+                                                <img src="img/basketsquare.jpg" alt="Black Blouse Armani">
+                                            </a>
+                                        </td>
+                                        <td><a href="#">Black Blouse Armani</a>
+                                        </td>
+                                        <td>1</td>
+                                        <td>$200.00</td>
+                                        <td>$0.00</td>
+                                        <td>$200.00</td>
+                                    </tr>-->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5">Total</th>
+                                        <th>{{cartContent.grandTotal | currency:"USD":true}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.content -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a (click)="paymentMethodShow()" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Payment method</a>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary">Place an order<i class="fa fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box -->
+
+            
+
+
+        </div>
+        <!-- /.col-md-9 -->
+
+        <div class="col-md-3">
+
+            <div class="box" id="order-summary">
+                <div class="box-header">
+                    <h3>Order summary</h3>
+                </div>
+                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Order subtotal</td>
+                                <th>{{cartContent.subtotal | currency:"USD":true}}</th>
+                            </tr>
+                            <tr>
+                                <td>Shipping and handling</td>
+                                <th>{{cartContent.shippingAmount | currency:"USD":true}}</th>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <th>{{cartContent.taxAmount | currency:"USD":true}}</th>
+                            </tr>
+                            <tr class="total">
+                                <td>Total</td>
+                                <th>{{cartContent.grandTotal | currency:"USD":true}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.col-md-3 -->
+    </div>
+    <div *ngIf="isOrderSuccess" class="jumbotron text-xs-center"> 
+        <h1 class="display-3">Thank You!</h1>
+        <p class="lead"><strong>Please check your email.</strong> Order Id is: {{orderId}}, for further instructions on how to complete your order placement.</p>
+        <hr>
+        <p>
+            Having trouble? <a rel="nofollow" routerLink="/contact">Contact us</a>
+        </p>
+        <p class="lead">
+            <a rel="nofollow" class="btn btn-primary btn-sm" routerLink="/" role="button">Continue to homepage</a>
+        </p>
+        <!--<p>Your Order Id is: {{orderId}}</p>-->
+    </div>
+            <!-- /.container -->
+</div>

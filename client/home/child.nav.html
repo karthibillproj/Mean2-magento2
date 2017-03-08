@@ -1,0 +1,7 @@
+<!--<ul class="dropdown-menu" role="menu">-->
+    <li *ngFor="let nav of subnav" [class.dropdown-submenu]="nav.level!=1 && nav.subnav">
+        <a routerLink="/category/page/{{nav.id}}" class="dropdown-toggle" data-toggle="dropdown">{{nav.title}}</a>
+        <!--<ul child-nav *ngIf="nav.subnav" [subnav]="nav.subnav"></ul>-->
+        <ul class="dropdown-menu" role="menu" child-nav *ngIf="nav.subnav" [subnav]="nav.subnav"></ul>
+    </li>
+<!--</ul>-->

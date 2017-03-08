@@ -1,0 +1,361 @@
+<style type="text/css">
+.thumbnail{ min-height: auto;}
+input[type="radio"] {display:block !important;}
+.checkoutpage .loading::before{ background-color: #999999;}
+</style>
+<div  *ngIf="mainloader" class="checkoutpage">
+        <div class="loading">Loading&#8230;</div>
+</div>
+<div *ngIf="!mainloader">
+       <div class="row form-group">
+            <div class="col-xs-12">
+                <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                    <li (click)="billingaddressshow()" [ngClass]="{ 'active': activebillingaddressclass,'disabled':disablebillingaddressclass  }"><a href="javascript:void(0)">
+                        <h4 class="list-group-item-heading">Step 1</h4>
+                        <p class="list-group-item-text">Billing address</p>
+                    </a></li>
+                    <li (click)="shippingaddressshow()" [ngClass]="{ 'active': activeshipaddressclass,'disabled':disableshipaddressclass  }"><a href="javascript:void(0)">
+                        <h4 class="list-group-item-heading">Step 2</h4>
+                        <p class="list-group-item-text">Shipping address</p>
+                    </a></li>
+                    <li (click)="shippingmethodshow()" [ngClass]="{ 'active': activeshippingmethodclass,'disabled':disableshippingmethodclass  }"><a href="javascript:void(0)">
+                        <h4 class="list-group-item-heading">Step 3</h4>
+                        <p class="list-group-item-text">Shipping method</p>
+                    </a></li>
+                    <li (click)="paymentmethodshow()" [ngClass]="{ 'active': activepaymentmethodcalss,'disabled':diablepaymetmethodclass  }"><a href="javascript:void(0)">
+                        <h4 class="list-group-item-heading">Step 4</h4>
+                        <p class="list-group-item-text">Payment method</p>
+                    </a></li>    
+                </ul>
+            </div>
+       </div>  
+
+<form *ngIf="showbillingaddress" [formGroup]="billingForm" novalidate  (ngSubmit)="billingsave(billingForm.value, billingForm.valid)" id="billingform"  method="post">
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12">
+            <div class="col-md-12 well">
+
+    <div class="content billingform">
+
+             <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="email">E-Mail</label>
+                        <input class="form-control" formControlName="email" name="email" id="email" type="text">
+                         <small class="error" [hidden]="billingForm.controls.email.valid || (billingForm.controls.email.pristine && !submitted)">
+                            Email is required and valid.
+                         </small>
+                    </div>
+                </div>
+             </div>
+         
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="firstname">Firstname</label>
+                        <input class="form-control" formControlName="firstname" name="firstname" id="firstname" type="text">
+                         <small class="error" [hidden]="billingForm.controls.firstname.valid || (billingForm.controls.firstname.pristine && !submitted)">
+                            Firstname is required.
+                         </small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <input class="form-control" formControlName="lastname" name="lastname" id="lastname" type="text">
+                         <small class="error" [hidden]="billingForm.controls.lastname.valid || (billingForm.controls.lastname.pristine && !submitted)">
+                            Lastname is required.
+                         </small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="cmp">Company</label>
+                        <input class="form-control" formControlName="company" name="company" id="company" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="street">Street</label>
+                        <input class="form-control" formControlName="street" name="street" id="street" type="text">
+                        <small class="error" [hidden]="billingForm.controls.street.valid || (billingForm.controls.street.pristine && !submitted)">
+                            Street address required.
+                         </small>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input class="form-control" formControlName="city" name="city" id="city" type="text">
+                          <small class="error" [hidden]="billingForm.controls.city.valid || (billingForm.controls.city.pristine && !submitted)">
+                            City required.
+                         </small>
+                    </div>
+                </div>
+                
+                 <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label for="country">State</label>
+                        <select class="form-control" formControlName="region" name="region" id="region">
+                           <option value="">Please select a region, state or province.</option>
+                           <option data-title="Alabama" value="1">Alabama</option>
+                           <option data-title="Alaska" value="2">Alaska</option>
+                           <option data-title="American Samoa" value="3">American Samoa</option>
+                           <option data-title="Arizona" value="4">Arizona</option>
+                           <option data-title="New Hampshire" value="40">New Hampshire</option>
+                            <option data-title="New Jersey" value="41">New Jersey</option>
+                            <option data-title="New Mexico" value="42">New Mexico</option>
+                            <option data-title="New York" value="43">New York</option>
+                        </select>
+                         <small class="error" [hidden]="billingForm.controls.region.valid || (billingForm.controls.region.pristine && !submitted)">
+                            State required.
+                         </small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="form-group">
+                        <label for="zip">Zipcode</label>
+                        <input class="form-control" formControlName="postcode" name="postcode" id="postcode" type="text">
+                         <small class="error" [hidden]="billingForm.controls.postcode.valid || (billingForm.controls.postcode.pristine && !submitted)">
+                            Zipcode required.
+                         </small>
+                    </div>
+                </div>
+
+               <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="form-control" formControlName="country_id" name="country_id" id="country_id">
+                           <option value="">Please select a country</option>
+                           <option data-title="Afghanistan" value="AF">Afghanistan</option>
+                           <option data-title="Albania" value="AL">Albania</option>
+                           <option data-title="Algeria" value="DZ">Algeria</option>
+                           <option data-title="American Samoa" value="AS">American Samoa</option>
+                           <option data-title="United States" value="US">United States</option>
+                        </select>
+                         <small class="error" [hidden]="billingForm.controls.country_id.valid || (billingForm.controls.country_id.pristine && !submitted)">
+                            Country required.
+                         </small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="phone">Phone number</label>
+                        <input class="form-control" formControlName="telephone" name="telephone" id="phone" type="text">
+                          <small class="error" [hidden]="billingForm.controls.telephone.valid || (billingForm.controls.telephone.pristine && !submitted)">
+                            Phonenumber required and valid.
+                         </small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="billingshiping">Same Billing-Shipping</label>
+                        <input class="" formControlName="billingshiping" value="1" checked (change)="setBillingShipping($event)" name="billingshiping" id="billingshiping" type="checkbox">
+                        
+                    </div>
+                </div>
+                
+                <!--<div class="checkbox">
+                  <label><input type="checkbox" value="">Same Billing-Shipping</label>
+                </div>-->
+
+            </div>
+            <!-- /.row -->
+        </div>
+                
+<!-- </form> --> 
+                <div class="row text-center">      
+                  <button type="submit" [disabled]="!billingForm.valid" id="activate-step-2" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<form *ngIf="showshippingaddress" [formGroup]="shippingForm" novalidate  (ngSubmit)="shippingsave(shippingForm.value, shippingForm.valid)" id="shippingForm" method="POST">
+
+    <div class="row setup-content" id="step-2">
+        <div class="col-xs-12">
+            <div class="col-md-12 well">
+                
+<!--<form></form> --> 
+             
+    <div class="content shippingform">
+         
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="firstname">Firstname</label>
+                        <input class="form-control" formControlName="firstname" name="firstname" id="firstname" type="text">
+                         <small class="error" [hidden]="shippingForm.controls.firstname.valid || (shippingForm.controls.firstname.pristine && !submitted)">
+                            Firstname is required.
+                         </small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <input class="form-control" formControlName="lastname" name="lastname" id="lastname" type="text">
+                         <small class="error" [hidden]="shippingForm.controls.lastname.valid || (shippingForm.controls.lastname.pristine && !submitted)">
+                            Lastname is required.
+                         </small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input class="form-control" formControlName="company" name="company" id="company" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="street">Street</label>
+                        <input class="form-control" formControlName="street" name="street" id="street" type="text">
+                        <small class="error" [hidden]="shippingForm.controls.street.valid || (shippingForm.controls.street.pristine && !submitted)">
+                            Street address required.
+                         </small>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input class="form-control" formControlName="city" name="city" id="city" type="text">
+                          <small class="error" [hidden]="shippingForm.controls.city.valid || (shippingForm.controls.city.pristine && !submitted)">
+                            City required.
+                         </small>
+                    </div>
+                </div>
+                
+                 <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label for="country">State</label>
+                        <select class="form-control" formControlName="region" name="region" id="region">
+                           <option value="">Please select a region, state or province.</option>
+                           <option data-title="Alabama" value="1">Alabama</option>
+                           <option data-title="Alaska" value="2">Alaska</option>
+                           <option data-title="American Samoa" value="3">American Samoa</option>
+                           <option data-title="Arizona" value="4">Arizona</option>
+                           <option data-title="New Hampshire" value="40">New Hampshire</option>
+                            <option data-title="New Jersey" value="41">New Jersey</option>
+                            <option data-title="New Mexico" value="42">New Mexico</option>
+                            <option data-title="New York" value="43">New York</option>
+                        </select>
+                         <small class="error" [hidden]="shippingForm.controls.region.valid || (shippingForm.controls.region.pristine && !submitted)">
+                            State required.
+                         </small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2">
+                    <div class="form-group">
+                        <label for="zip">Zipcode</label>
+                        <input class="form-control" formControlName="postcode" name="postcode" id="postcode" type="text">
+                         <small class="error" [hidden]="shippingForm.controls.postcode.valid || (shippingForm.controls.postcode.pristine && !submitted)">
+                            Zipcode required.
+                         </small>
+                    </div>
+                </div>
+
+               <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="form-control" formControlName="country_id" name="country_id" id="country_id">
+                           <option value="">Please select a country</option>
+                           <option data-title="Afghanistan" value="AF">Afghanistan</option>
+                           <option data-title="Albania" value="AL">Albania</option>
+                           <option data-title="Algeria" value="DZ">Algeria</option>
+                           <option data-title="American Samoa" value="AS">American Samoa</option>
+                           <option data-title="United States" value="US">United States</option>
+                        </select>
+                         <small class="error" [hidden]="shippingForm.controls.country_id.valid || (shippingForm.controls.country_id.pristine && !submitted)">
+                            Country required.
+                         </small>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="phone">Phone number</label>
+                        <input class="form-control" formControlName="telephone" name="telephone" id="phone" type="text">
+                          <small class="error" [hidden]="shippingForm.controls.telephone.valid || (shippingForm.controls.telephone.pristine && !submitted)">
+                            Phonenumber required and valid.
+                         </small>
+                    </div>
+                </div>
+               
+
+            </div>
+            <!-- /.row -->
+        </div>
+        
+               <div class="row text-center"> 
+                  <button type="submit" [disabled]="!shippingForm.valid" id="activate-step-3" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<form *ngIf="showshippingmethod" [formGroup]="shippingmethodForm" novalidate  (ngSubmit)="shippingmethodsave(shippingmethodForm.value, shippingmethodForm.valid)" id="shippingmethodForm" method="POST">
+
+    <div class="row setup-content" id="step-3">
+        <div class="col-xs-12">
+            <div class="col-md-12 well">
+                <div class="radio">
+                  <label><input type="radio" formControlName="shippingmethod" value="freeshipping_freeshipping" name="shippingmethod">Free shipping $0.00</label>
+                </div>
+                
+<!--<form></form> --> 
+               <div class="row text-center">
+                <button type="submit"  id="activate-step-4" class="btn btn-primary btn-lg">Submit</button>
+               </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<form *ngIf="showpaymentmethod" [formGroup]="paymentmethodForm" novalidate  (ngSubmit)="paymentmethodsave(paymentmethodForm.value, paymentmethodForm.valid)" id="paymentmethodForm" method="POST">
+    
+    <div class="row setup-content" id="step-4">
+        <div class="col-xs-12">
+            <div class="col-md-12 well">
+                <div class="radio">
+                  <label><input type="radio" formControlName="paymentmethod" value="checkmo" checked="checked" name="paymentmethod">Cash on delivery</label>
+             </div>
+                
+               <div class="row text-center">       
+                 <img *ngIf="isLoaderActive" src="../public/images/ajax-loader.gif" alt="">       
+                 <button  type="submit"  id="activate-step-4" class="btn btn-primary btn-lg">Place order</button>
+               </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>

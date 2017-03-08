@@ -1,0 +1,167 @@
+<!--<div class="container">
+    <div class="row" *ngIf="displayMode=='PRODUCTS'">
+        <div class="col-md-3">
+            <ul class="sidebar-nav filters">
+                <li>Filters</li>
+                <li *ngFor="let filter of filters">
+                    <h4>{{filter.filterName}}</h4>
+                    <product-filters [preSelectedFromUrl]="preSelectedFull[filter.filterId]" (updateFilters)="updateFilterParent($event);" [filterName]="filter.filterId"
+                        [filter]="filter" [singleSelect]="false"></product-filters>
+                </li>
+                <li class="sidebar-items-brand" *ngIf="priceObj">
+                    <div class="price-section">
+                        <h4>Price</h4>
+
+                        <nouislider [connect]="true" [min]="priceObj.minprice" [max]="priceObj.maxprice" [step]="2" [(ngModel)]="someRange" (ngModelChange)="onPriceChange($event)"></nouislider>
+                        <ul class="list-unstyled min-max-section">
+                            <li class="pull-left"><label>Min: <strong [innerHtml]="someRange[0]"></strong></label></li>
+                            <li class="pull-right"><label>Max: <strong [innerHtml]="someRange[1]"></strong></label></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+        <div class="input-sort">
+            <select name="sorting" [(ngModel)]="selectedSortItem" (change)="doSort($event)" class="form-control">
+
+                    <option *ngFor="let sort of sortItems" [value]="sort.value">
+                        {{sort.title}}
+                    </option>
+                </select>
+        </div>
+
+        <product-listing [productList]="productList"></product-listing>
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-9">
+                <pagination [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [totalItems]="totalItems"
+                    [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                    lastText="&raquo;"></pagination>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="displayMode=='PAGE'">
+        <div class="col-md-12">
+            <div innerHtml={{categoryContent}}></div>
+        </div>
+    </div>
+</div>-->
+
+
+
+<!--new design implementation-->
+
+<div class="container">
+    <div class="row" *ngIf="displayMode=='PRODUCTS' && totalItems > 0">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a routerLink="/">Home</a>
+                </li>
+                <li>Category</li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <!-- *** MENUS AND FILTERS *** -->
+            <div class="panel panel-default sidebar-menu" *ngFor="let filter of filters">
+
+
+                <product-filters [preSelectedFromUrl]="preSelectedFull[filter.filterId]" (updateFilters)="updateFilterParent($event);" [filterName]="filter.filterId"
+                    [filter]="filter" [singleSelect]="false"></product-filters>
+            </div>
+            <!--price filter
+            -->
+            <div class="panel panel-default sidebar-menu" *ngIf="priceObj">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{priceObj.filterName}}</h3>
+                </div>
+                <div class="panel-body">
+                    <nouislider [connect]="true" [min]="priceObj.minprice" [max]="priceObj.maxprice" [step]="2" [(ngModel)]="someRange" (ngModelChange)="onPriceChange($event)"></nouislider>
+                    <ul class="list-unstyled min-max-section">
+                        <li class="pull-left"><label>Min: <strong [innerHtml]="someRange[0]"></strong></label></li>
+                        <li class="pull-right"><label>Max: <strong [innerHtml]="someRange[1]"></strong></label></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- *** MENUS AND FILTERS END *** -->
+            <!--<div class="banner">
+                <a href="#">
+                    <img src="./public/images/banner.jpg" alt="sales 2014" class="img-responsive">
+                </a>
+            </div>-->
+        </div>
+
+        <div class="col-md-9">
+            <div class="box">
+                <h1>{{categoryName}}</h1>
+                <p>{{categoryDescription}}
+                </p>
+            </div>
+
+            <div class="box info-bar">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 products-showing">
+                        Showing <strong>{{itemsPerPage}}</strong> of <strong>{{totalItems}}</strong> products
+                    </div>
+
+                    <div class="col-sm-12 col-md-8  products-number-sort">
+                        <div class="row">
+                            <!--<div class="col-md-6 col-sm-6">
+                                    <div class="products-number">
+                                        <strong>Show</strong> <a href="#" class="btn btn-default btn-sm btn-primary">12</a>
+                                        <a href="#" class="btn btn-default btn-sm">24</a> <a href="#" class="btn btn-default btn-sm">All</a>                                        products
+                                    </div>
+                                </div>-->
+                            <div class="col-md-6 col-sm-6 pull-right">
+                                <div class="products-sort-by">
+                                    <strong>Sort by</strong>
+                                    <select name="sorting" [(ngModel)]="selectedSortItem" (change)="doSort($event)" class="form-control">
+                                        <option *ngFor="let sort of sortItems" [value]="sort.value">
+                                            {{sort.title}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="pages">
+
+                <!--<p class="loadMore">
+                    <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a>
+                </p>-->
+
+                <div class="row product-list-pagination">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <pagination [itemsPerPage]="itemsPerPage" (pageChanged)="pageChanged($event)" [boundaryLinks]="true" [totalItems]="totalItems"
+                            [(ngModel)]="currentPage" class="pagination-sm" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                            lastText="&raquo;"></pagination>
+                    </div>
+                </div>
+            </div>
+
+            <product-listing [productList]="productList"></product-listing>
+
+
+        </div>
+        <!-- /.col-md-9 -->
+
+    </div>
+    <div class="col-md-12" *ngIf="displayMode=='PRODUCTS' && totalItems < 1">
+        <p>There are no products attached to this category.</p>
+        <a routerLink="/" class="btn btn-primary btn-lg">Continue Shopping<i class="fa fa-chevron-right"></i></a>
+    </div>
+    <div class="row" *ngIf="displayMode=='PAGE'">
+        <div class="col-md-12">
+            <div innerHtml={{categoryContent}}></div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->

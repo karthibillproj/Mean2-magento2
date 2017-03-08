@@ -1,0 +1,14 @@
+<div class="col-md-3">
+    
+    <ul class="sidebar-nav my-account">
+        <li class="sidebar-brand">My Account</li>
+        <li [ngClass]="{'active':selectedTab === 'dashboard'}" (click)="selectedTabChange('dashboard')"><a routerLink="/account" routerLinkActive="active">Dashboard</a></li>
+        <li [ngClass]="{'active':selectedTab === 'account'}" (click)="selectedTabChange('account')"><a routerLink="/account/orders" routerLinkActive="active">Account Info</a></li>
+        <li [ngClass]="{'active':selectedTab === 'addresses'}" (click)="selectedTabChange('addresses')"><a routerLink="/" routerLinkActive="active">Addresses</a></li>
+        <li [ngClass]="{'active':selectedTab === 'orders'}" (click)="selectedTabChange('orders')"><a routerLink="/account/orders" routerLinkActive="active">My Orders</a></li>
+        <li [ngClass]="{'active':selectedTab === 'events'}" (click)="selectedTabChange('events')"><a routerLink="/" routerLinkActive="active">Events</a></li>
+        <li [ngClass]="{'active':selectedTab === 'about'}" (click)="selectedTabChange('about')"><a routerLink="/" routerLinkActive="active">About</a></li>
+        <li [ngClass]="{'active':selectedTab === 'contact'}" (click)="selectedTabChange('contact')"><a routerLink="/" routerLinkActive="active">Contacts</a></li>
+    </ul>  
+    
+</div>

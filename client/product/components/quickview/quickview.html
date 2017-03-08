@@ -1,0 +1,69 @@
+<div class="loading" *ngIf="isLoaderActive"></div>
+<div class="row" id="productMain">
+    <div class="col-sm-5">
+        <div id="mainImages">
+            <img [src]="product.image" alt="" class="img-responsive">
+        </div>
+
+        <div class="ribbon sale" *ngIf="product.specialPrice">
+            <div class="theribbon">SALE</div>
+            <div class="ribbon-background"></div>
+        </div>
+        <!-- /.ribbon -->
+
+        <div class="ribbon new" *ngIf="product.isNew=='Yes'">
+            <div class="theribbon">NEW</div>
+            <div class="ribbon-background"></div>
+        </div>
+        <!-- /.ribbon -->
+
+    </div>
+    <div class="col-sm-7">
+        <div class="box">
+            <h1 class="text-center">{{product.name}}</h1>
+            <p class="text-center">Sku: {{product.sku}}</p>
+            <p class="text-center">Stock: {{product.stockstatus}}</p>
+            <div class="text-center" *ngIf="product.overallrating">
+                <overallrate [starrate]="product.overallrating"></overallrate>
+            </div>
+            <div class="text-center" *ngIf="product.reviewscount"><label class="label label-info">{{product.reviewscount}} reviews</label></div>
+            <p class="price">
+                <del *ngIf="product.specialPrice">{{product.price | currency:'USD':true}}</del> {{product.finalPrice | currency:'USD':true}}</p>
+            
+            <div class="text-center buttons" *ngIf="product.stockstatus == 'instock'">
+                <input *ngIf="product.stockstatus == 'instock'" class="form-control qty-input-box" type="text" [(ngModel)]="inv.quantity"/>
+                <a href="javascript:void(0);" (click)="addToCart(product.productid,product.sku,product.price,inv.quantity)" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                <a href="javascript:void(0);" disabled class="btn btn-default"><i class="fa fa-heart"></i> Add to wishlist</a>
+            </div>
+
+            <hr>
+            <div class="social">
+                <h4>Show it to your friends</h4>
+                <p>
+                    <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row" id="thumbs">
+            <div class="col-xs-2" *ngFor="let gallery of product.galleryimage;">
+                <a (click)="setProductimage(gallery.large)" href="javascript:void(0);" class="thumb">
+                    <img [src]="gallery.thumbnail" alt="" class="img-responsive">
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<modal #modal [keyboard]="true" [backdrop]="'static'">
+    <modal-body>
+        <div class="alert alert-success">
+            <strong>Success!</strong> Product added to cart.
+        </div>
+        <a class="btn btn-info" data-dismiss="modal">Continue shopping</a>
+        <a class="btn btn-info" routerLink="/cart">View cart</a>
+    </modal-body>
+</modal>

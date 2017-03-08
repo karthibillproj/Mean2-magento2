@@ -1,0 +1,253 @@
+<!--<div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+
+<div class="container">
+    <h1>Cart</h1>
+    <form *ngIf="cartContent.itemsQty > 0"  #updatecartform="ngForm" (ngSubmit)="updatecartsubmit(cartproduct)" id="updatecartform" class="form-horizontal">
+    <table id="cart" class=" cart-table table table-hover">
+        <thead>
+            <tr>
+                <th style="width:50%">Product</th>
+                <th style="width:10%">Price</th>
+                <th style="width:8%">Quantity</th>
+                <th style="width:22%" class="text-center">Subtotal</th>
+                <th style="width:10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            <tr *ngFor="let item of cartContent.items;let myIndex = index">
+                <td data-th="Product">
+                    <div class="row">
+                        <div class="col-sm-2 hidden-xs">
+                            <div *ngFor="let productimage of productImages" >
+                                <img *ngIf="productimage.itemId==item.itemId" [src]="productimage.image" />
+                            </div> 
+                           
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="media-body">
+                                <h4 class="media-heading">{{item.name}}</h4>
+                                           </div>
+                        </div>
+                    </div>
+                </td>
+                <td data-th="Price">{{item.price | currency:"USD":true}}</td>
+                <td data-th="Quantity">
+                    <input #updatecartinput (keyup)="updateShow($event,item.qty)" (click)="updateShow($event,item.qty)"  type="number" class="form-control text-center" value="{{item.qty}}">
+                    <button (click)="updateCart(updatecartinput.value,item.itemId)" class="btn btn-info btn-sm update-cart-button"><i class="glyphicon glyphicon-refresh"></i>Update</button>
+                </td>
+                <td data-th="Subtotal" class="text-center">{{item.rowTotal | currency:"USD":true}}</td>
+                <td class="actions" data-th="">
+                    <button (click)="removeCartItem(item.itemId)" class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5">
+                <div class="text-center">
+                    <div class="col-xs-9">
+                        <h6 class="text-right">Added items?</h6>
+                    </div>
+                    <div class="col-xs-3">
+                        <button type="submit" class="btn btn-info btn-sm btn-block">
+                            Update cart
+                        </button>
+                    </div>
+				</div>
+                </td>
+			</tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>   </td>
+                <td>   </td>
+                <td>   </td>
+                <td class="text-center"><h5>Subtotal</h5></td>
+                <td class="text-left"><h5><strong>{{cartContent.subtotal | currency:"USD":true}}</strong></h5></td>
+            </tr>
+            <tr>
+                <td>   </td>
+                <td>   </td>
+                <td>   </td>
+                <td class="text-center"><h5>Discount</h5></td>
+                <td class="text-left"><h5><strong>{{cartContent.discountAmount | currency:"USD":true}}</strong></h5></td>
+            </tr>
+            <tr>
+                <td>   </td>
+                <td>   </td>
+                <td>   </td>
+                <td class="text-center"><h5>Tax</h5></td>
+                <td class="text-left"><h5><strong>{{cartContent.baseTaxAmount | currency:"USD":true}}</strong></h5></td>
+            </tr>
+            <tr>
+                <td>   </td>
+                <td>   </td>
+                <td>   </td>
+                <td class="text-center"><h5>Grand Total</h5></td>
+                <td class="text-left"><h5><strong>{{cartContent.baseGrandTotal | currency:"USD":true}}</strong></h5></td>
+            </tr>            
+            <tr>
+                <td><a routerLink="/" class="btn btn-warning btn-lg"><i class="glyphicon glyphicon-shopping-cart"></i> Continue Shopping</a></td>
+                <td colspan="2" class="hidden-xs"></td>
+                <td class="hidden-xs text-center"></td>
+                <td><a routerLink="/checkout" class="btn btn-success btn-block btn-lg">Checkout <i class="glyphicon glyphicon-chevron-right"></i></a></td>
+            </tr>
+        </tfoot>
+    </table>
+    </form>
+    <div *ngIf="cartContent.itemsQty == 0" >
+        There is no items in cart currently!
+    </div>
+</div>
+</div>-->
+
+<div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+<div class="container" *ngIf="!isLoaderActive || showOnUpdate">
+
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a>
+            </li>
+            <li>Shopping cart</li>
+        </ul>
+    </div>
+    <div class="cart-section" *ngIf="cartContent.itemsQty > 0">
+        <div class="col-md-9" id="basket">
+
+            <div class="box">
+
+                <form method="post" action="checkout1.html">
+
+                    <h1>Shopping cart</h1>
+                    <p class="text-muted">You currently have {{cartContent.itemsQty}} item(s) in your cart.</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit price</th>
+                                    <th colspan="2">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of cartContent.items;let myIndex = index">
+                                    <td>
+                                        <!--<a href="#" *ngFor="let productimage of productImages" >
+                                        <img imagePlaceholder *ngIf="productImage.itemId==item.itemId" [src]="productimage.image" alt="White Blouse Armani">
+                                    </a>-->
+                                    </td>
+                                    <td><a routerLink="/">{{item.name}}</a>
+                                    </td>
+                                    <td data-th="Quantity">
+                                        <input #updatecartinput (keyup)="updateShow($event,item.qty)" (click)="updateShow($event,item.qty)" type="number" class="form-control text-center"
+                                            value="{{item.qty}}">
+                                        <button style="display:none;" (click)="updateCart(updatecartinput.value,item.itemId)" class="btn btn-info btn-sm update-cart-button"><i class="fa fa-refresh"></i>Update</button>
+                                    </td>
+                                    <td>{{item.price | currency:"USD":true}}</td>
+                                    <td>{{item.rowTotal | currency:"USD":true}}</td>
+                                    <td><a (click)="removeCartItem(item.itemId)" href="javascript:void(0);"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Total</th>
+                                    <th colspan="2">{{cartContent.baseSubtotal | currency:"USD":true}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                    <!-- /.table-responsive -->
+
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            <a routerLink="/" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                        </div>
+                        <div class="pull-right">
+                            <button disabled class=" disabled btn btn-default"><i class="fa fa-refresh"></i> Update basket</button>
+                            <button type="button" routerLink="/checkout" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i>
+                                    </button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <!-- /.box -->
+
+
+
+
+
+        </div>
+        <!-- /.col-md-9 -->
+
+        <div class="col-md-3">
+            <div class="box" id="order-summary">
+                <div class="box-header">
+                    <h3>Order summary</h3>
+                </div>
+                <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Order subtotal</td>
+                                <th>{{cartContent.subtotal | currency:"USD":true}}</th>
+                            </tr>
+                            <tr>
+                                <td>Shipping and handling</td>
+                                <th>{{cartContent.shippingAmount | currency:"USD":true}}</th>
+                            </tr>
+                            <tr>
+                                <td>Discount</td>
+                                <th>{{cartContent.discountAmount | currency:"USD":true}}</th>
+                            </tr>
+                            <tr>
+                                <td>Tax</td>
+                                <th>{{cartContent.taxAmount | currency:"USD":true}}</th>
+                            </tr>
+                            <tr class="total">
+                                <td>Total</td>
+                                <th>{{cartContent.baseGrandTotal | currency:"USD":true}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <div class="box">
+                <div class="box-header">
+                    <h4>Coupon code</h4>
+                </div>
+                <p class="text-muted">If you have a coupon code, please enter it in the box below.</p>
+                <div *ngIf="couponResponse.isValid" class="alert alert-success">{{couponResponse.message}}</div>
+                <div *ngIf="!couponResponse.isValid" class="alert alert-error">{{couponResponse.message}}</div>
+                <form novalidate (ngSubmit)="applyCoupon(cartContent.couponCode)" [formGroup]="coupon">
+                    <div class="input-group">
+
+                        <input type="text" class="form-control" formControlName="couponname">
+
+                        <span class="input-group-btn">
+                    <button *ngIf="!cartContent.couponCode" class="btn btn-primary" type="submit" [disabled]="!coupon.valid"><i class="fa fa-gift"></i></button>
+					<button *ngIf="cartContent.couponCode" class="btn btn-primary" type="submit"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+				    </span>
+                    </div>
+                    <!-- /input-group -->
+                </form>
+            </div>
+
+        </div>
+        <!-- /.col-md-3 -->
+    </div>
+    <div class="col-md-12" *ngIf="cartContent.itemsQty == 0 || (cartContent | json) === '{}'">
+        <p>There is no items in cart currently.</p>
+        <a routerLink="/" class="btn btn-primary btn-lg">Continue Shopping<i class="fa fa-chevron-right"></i></a>
+    </div>
+</div>
+<!-- /.container -->

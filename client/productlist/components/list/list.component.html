@@ -1,0 +1,112 @@
+<!--<div class="col-md-9">
+    <div class="well well-sm">
+        <strong>Category Title</strong>
+        <div class="btn-group">
+            <a href="javascript:void(0);" (click)="toggleClass('list');" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a>
+            <a href="javascript:void(0);" (click)="toggleClass('grid');" id="grid" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+    </div>
+    <div id="products" class="row list-group" class="products-list">
+        <div class="item  col-xs-6 col-lg-4 col-md-4 col-sm-3" *ngFor="let product of productList" [ngClass]="{'list-group-item': gridCheck==true,'grid-group-item':gridCheck==false}">
+            <div class="thumbnail">
+                <div class="img-with-quickview">
+                    <a class="product-name" [routerLink]="'/product/'+product.sku">
+                        <img imagePlaceholder class="group list-group-image img-responsive" [src]="product.image" alt="" />
+                    </a>
+                    <div class="quickview-link" (click)="openQuickview(product.sku)">
+                        <a href="javascript:void(0);">Quickview</a>
+                    </div>
+                </div>
+                <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                        <a class="product-name" [routerLink]="'/product/'+product.sku">{{product.name}}</a>
+                    </h4>
+                    <div class="rating-review-list">
+                        <overallrate [starrate]="3"></overallrate>
+                        <span *ngIf="1" class="label label-default">3 reviews</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-sm-12">
+                            <p class="lead">
+                                {{product.price | currency:'USD':true}}</p>
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-sm-12">
+                            <a class="btn btn-success" [routerLink]="'/product/'+product.sku">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>-->
+<modal #modal [keyboard]="true">
+    <!--<modal-header [show-close]="true">
+        <h4 class="modal-title">Product Quickview</h4>
+    </modal-header>-->
+    <modal-body>
+        <div class="product-quickview">
+            <quickview [product]="currentProduct"></quickview>
+            <a class="btn btn-success" [routerLink]="'/product/'+currentProduct.sku">View Details</a>
+        </div>
+    </modal-body>
+    <modal-footer>
+        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
+    </modal-footer>
+</modal>
+
+
+<!--new product listing-->
+<div class="row products">
+    <div class="col-md-4 col-sm-6" *ngFor="let product of productList">
+        <div class="product">
+            <div class="flip-container">
+                <div class="flipper">
+                    <div class="front">
+                        <a [routerLink]="'/product/'+product.sku">
+                            <img imagePlaceholder [src]="product.image" alt="" class="img-responsive">
+                        </a>
+                    </div>
+                    <div class="back">
+                        <a [routerLink]="'/product/'+product.sku">
+                            <img imagePlaceholder [src]="product.image" alt="" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <a [routerLink]="'/product/'+product.sku" class="invisible">
+                <img imagePlaceholder [src]="product.image" alt="" class="img-responsive">
+            </a>
+            <div class="text">
+                <h3><a [routerLink]="'/product/'+product.sku">{{product.name}}</a></h3>
+                <p class="price">
+                    <del *ngIf="product.specialPrice">{{product.price | currency:'USD':true}}</del> {{product.finalPrice | currency:'USD':true}}</p>
+                <p class="buttons">
+                    <a [routerLink]="'/product/'+product.sku" class="btn btn-default">View detail</a>
+                    <a [routerLink]="'/product/'+product.sku" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                </p>
+            </div>
+            <!-- /.text -->
+
+            <div class="ribbon sale" *ngIf="product.specialPrice">
+                <div class="theribbon">SALE</div>
+                <div class="ribbon-background"></div>
+            </div>
+            <!-- /.ribbon -->
+
+            <div class="ribbon new" *ngIf="product.isNew=='Yes'">
+                <div class="theribbon">NEW</div>
+                <div class="ribbon-background"></div>
+            </div>
+            <!-- /.ribbon -->  
+
+            <!--<div class="ribbon gift">
+                <div class="theribbon">GIFT</div>
+                <div class="ribbon-background"></div>
+            </div>-->
+            <!-- /.ribbon -->          
+        </div>
+        <!-- /.product -->
+    </div>
+</div>

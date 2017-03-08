@@ -1,0 +1,10 @@
+
+<div class="container">
+    <div class="row">
+        <alert *ngIf="loginSuccessful" type="success" ><strong>Congrats! </strong> you are successfully logged in.</alert>
+        <div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+        <account-nav></account-nav>
+        <router-outlet></router-outlet>       
+    </div>
+</div>
+

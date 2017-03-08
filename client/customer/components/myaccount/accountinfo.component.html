@@ -1,0 +1,34 @@
+<div class="loading" *ngIf="isLoaderActive">Loading&#8230;</div>
+        <div class="col-md-9">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h1>Account Information</h1></div>
+
+                <div class="panel-body">
+                    <dl class="dl-horizontal">                        
+                        <div>
+                            <dt>Name : </dt>
+                            <dd>{{customerData.firstname}} {{customerData.lastname}}</dd>
+                        </div>
+                        <div>
+                            <dt>Email : </dt>
+                            <dd>{{customerData.email}}</dd>
+                        </div>
+                        <!--<div>
+                            <dt>Mobile : </dt>
+                            <dd>{{customerData.mobile}}</dd>
+                        </div>
+                        <div>                           
+                            <dt>Gender : </dt>
+                            <dd>{{customerData.gender}}</dd>
+                        </div>-->
+                    </dl>
+
+                    <div class="btn-toolbar text-center" role="toolbar">
+                    <button type="button" class="btn btn-primary">Change Password</button>
+                    <button type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger">Delete Address</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>

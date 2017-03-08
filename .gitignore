@@ -1,0 +1,12 @@
+# storefront-node-ng
+# dev branch
+
+.vscode/*
+node_modules/*
+npm-debug.log
+client/**/*.js
+client/**/*.js.map
+lib/magentoRestApiClient.js
+config/magentobaseurl.js
+data/
+testjson/*

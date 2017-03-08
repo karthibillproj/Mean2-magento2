@@ -1,0 +1,32 @@
+<!--checkbox filter-->
+
+<!--<input type="text" name="brand-search" *ngIf="filter.isSearchable == true" class="form-control" [(ngModel)]="searchQuery">
+<ul class="brands list-unstyled">
+    <li>
+        <div class="checkbox" *ngFor="let option of filter.options | findPipe:searchQuery">
+            <label>
+                <input type="checkbox" [(ngModel)]="option.selected" [value]="option.value" (change)="sendCheckbox($event);" />
+                <span name="brand-title" class="cr"><i class="cr-icon fa fa-check"></i></span>
+                {{option.title}}
+            </label>
+        </div>                                
+    </li>
+</ul>         -->
+
+<div class="panel-heading">
+    <h3 class="panel-title">{{filter.filterName}} 
+        <!--<a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a>-->
+        </h3>
+</div>
+<div class="panel-body">
+    <input type="text" name="brand-search" *ngIf="filter.isSearchable == true" class="form-control" [(ngModel)]="searchQuery">
+    <div class="form-group">
+        <div class="checkbox" *ngFor="let option of filter.options | findPipe:searchQuery">
+            <label>
+                <input type="checkbox" [(ngModel)]="option.selected" [value]="option.value" (change)="sendCheckbox($event);" />
+                <span name="brand-title" class="cr"><i class="cr-icon fa fa-check"></i></span>
+                {{option.title}}
+            </label>
+        </div>
+    </div>
+</div>
